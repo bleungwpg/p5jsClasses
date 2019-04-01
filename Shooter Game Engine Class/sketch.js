@@ -1,86 +1,98 @@
+var animation = new Array(6);
+
+var enemies = new Array(4);
 var p1 = new Character(100,400);
 var e1 = new Character(100,100);
 var c1 = new Collision();
-var projectileList = new Array(5);
-var showProjectile;
-var projectileCounter = [0, 0, 0];
+var pm1 = new ProjectileManager(3);
 
 function setup()
 {
 	createCanvas(500,500);
-	showProjectile = false;
-	for (var x = 0; x < 5; x++)
+
+
+//	p1.setSpeedV(5);
+
+	setupDeathAnimation();
+
+	e1.birthCharacter();
+	e1.setSpeedV(1);
+	e1.setDeathAnimation(animation);
+
+	for (var i = 0; i < enemies.length; i++)
 	{
-		projectileList[x] = new Projectile(0,0,500,500)
+		enemies[i] = new Character(100+100*i,40);
+		enemies[i].birthCharacter();
+		enemies[i].setSpeedV(1);
+		enemies[i].setDeathAnimation(animation);
 	}
+
+
+}
+
+function setupDeathAnimation()
+{
+	animation[0] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-1.png');
+	animation[1] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-2.png');
+	animation[2] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-3.png');
+	animation[3] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-4.png');
+	animation[4] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-5.png');
+	animation[5] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-6.png');
+
+
 }
 
 function draw()
 {
 	background(125,125,125);
-	p1.drawCharacter();
-	p1.moveCharacter();
 
-	e1.drawCharacter();
-
-	// if you pressed ' '
-	// initiate firing of projectile
-	if (showProjectile == true)
+	if (p1.isAlive() == true)
 	{
-		for (var x = 0; x < projectileList.length; x++)
+		// draw player character
+		// wait to move player character based on controls
+		p1.drawCharacter();
+		p1.moveCharacter();
+	}
+
+	for (var i = 0; i < enemies.length; i++)
+	{
+		// draw enemy Character
+		if (enemies[i].isAlive() != -1)
 		{
-			if (projectileList[x].isProjectileDestroyed() > 0)
+			// draw enemy Character
+			// automatically move enemy down
+			enemies[i].drawCharacter();
+			enemies[i].autoMoveDown();
+
+			// kill character if it is off screen
+			if (enemies[i].getX() > 500)
 			{
-				projectileList[x].drawProjectile();
-				projectileList[x].fireProjectile("up");
-				if (c1.collided(projectileList[x].getX(),projectileList[x].getY(),projectileList[x].getRadius(),
-				    e1.getX(),e1.getY(),e1.getRadius()) == true)
-				{
-					console.log('explode!');
-				}
+				enemies[i].killCharacter();
 			}
 		}
+
+		if (pm1.hasCollided(enemies[i]) == true)
+		{
+			enemies[i].killCharacter();
+		}
+
 	}
-//	console.log(projectileList[0].isProjectileDestroyed()+' '+projectileList[1].isProjectileDestroyed());
+
+	pm1.manageProjectile();
+
+
+
 }
 
 
 function keyPressed()
 {
-	p1.charKeyPressed()
-	if (key == ' ')
-	{
-		// Record which projectiles are currently being fired
-		// this is to help limit the number of projectiles to 3 (present)
-		for (var x = 0; x< projectileList.length; x++)
-		{
-			if (projectileList[x].isProjectileDestroyed() == -1)
-			{
-				projectileCounter[x] = 0;
-			}
-		}
-
-
-		for (var x = 0; x< projectileList.length; x++)
-		{
-			// if projectile is destroyed then we may fire another projectile
-			if (projectileList[x].isProjectileDestroyed() == -1)
-			{
-				showProjectile = true;
-				projectileList[x].setXY(p1.getX(),p1.getY());
-				projectileCounter[x] = 1;
-				break;
-			}
-		}
-
-	}
+	p1.charKeyPressed();
+	pm1.myKeyPressed(p1);
 }
 
 function keyReleased()
 {
-	p1.charKeyReleased()
-	if (key == ' ')
-	{
-
-	}
+	p1.charKeyReleased();
+	pm1.myKeyReleased();
 }

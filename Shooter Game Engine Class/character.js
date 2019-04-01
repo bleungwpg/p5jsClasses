@@ -13,6 +13,26 @@ class Character {
 		this.leftActive = false;
 		this.rightActive = false;
 
+		// alive = 0 is dead but not finished death animation
+		// alive = 1 is alive
+		// alive = -1 is dead and completed death animation
+		this.alive = 1;
+
+		this.deathAnimationFrames = null;
+		this.deathAnimation = null;
+	}
+
+	setDeathAnimation(deathAnimationFrames)
+	{
+		this.deathAnimationFrames = new Array(deathAnimationFrames.length);
+		for (var i = 0; i < deathAnimationFrames.length; i++)
+		{
+			this.deathAnimationFrames[i] = deathAnimationFrames[i];
+		}
+		this.deathAnimation = new Animation(100,100,30,30,deathAnimationFrames.length,this.deathAnimationFrames);
+		this.deathAnimation.setRepeatAnimation(false);
+		this.deathAnimation.setAnimationSpeed(3);
+
 	}
 
 	setCharacterImage(img,length,height)
@@ -46,6 +66,27 @@ class Character {
 	{
 		return this.length/2;
 	}
+
+	autoMoveDown()
+	{
+		this.y += this.speedV;
+	}
+
+	autoMoveUp()
+	{
+		this.y -= this.speedV;
+	}
+
+	autoMoveRight()
+	{
+		this.x += this.speedH;
+	}
+
+	autoMoveLeft()
+	{
+		this.x -= this.speedH;
+	}
+
 
 
 	moveCharacter()
@@ -139,14 +180,42 @@ class Character {
 
 	drawCharacter()
 	{
-		if (this.charImage == null)
+		if (this.alive == 1)
 		{
-			ellipse(this.x,this.y,this.length,this.height);
+			if (this.charImage == null)
+			{
+				ellipse(this.x,this.y,this.length,this.height);
+			}
+			else
+			{
+				image(this.charImage,this.x-this.length/2,this.y-this.height/2);
+			}
 		}
-		else
+		else if (this.alive == 0 && this.deathAnimation.isAnimationFinished() != -1)
 		{
-			image(this.charImage,this.x-this.length/2,this.y-this.height/2);
+			this.deathAnimation.drawAnimation();
 		}
+		else if (this.alive == 0 && this.deathAnimation.isAnimationFinished() == -1)
+		{
+			this.alive = -1;
+		}
+	}
+
+	killCharacter()
+	{
+		this.alive = 0;
+		this.deathAnimation.setXY(this.x-15,this.y-15);
+		this.deathAnimation.startAnimation();
+	}
+
+	birthCharacter()
+	{
+		this.alive = 1;
+	}
+
+	isAlive()
+	{
+		return this.alive;
 	}
 
 
