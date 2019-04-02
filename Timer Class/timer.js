@@ -83,6 +83,18 @@ class Timer {
 
 	}
 
+	isTimerFinished()
+	{
+//		console.log(this.startFlag);
+		if (this.startFlag == 2)
+		{
+			return true;
+		}
+		else {
+				return false;
+		}
+	}
+
 	textOff()
 	{
 		this.turnTextOff = true;
@@ -108,7 +120,7 @@ class Timer {
 
 	getCurrentTime()
 	{
-		return round(this.lengthAnimation/this.length*this.userMaxTime);		
+		return round(this.lengthAnimation/this.length*this.userMaxTime);
 	}
 
 	setTimerColor(r,g,b)
@@ -147,7 +159,7 @@ function drawTimer()
 {
 	fill(this.r,this.g,this.b);
 	rect(this.x,this.y,this.length,this.height);
-    
+
 }
 
 function startTimer()
