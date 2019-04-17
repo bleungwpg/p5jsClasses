@@ -42,6 +42,18 @@ class Character {
 		this.charImage = img;
 	}
 
+	setXY(x,y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+
+	setLengthHeight(l,h)
+	{
+		this.length = l;
+		this.height = h;
+	}
+
 	setSpeedV(speed)
 	{
 		this.speedV = speed;
@@ -129,6 +141,7 @@ class Character {
 		else if (this.upActive == false && this.leftActive == false && this.downActive == true && this.rightActive == false)
 		{
 		  this.y += this.speedV;
+			console.log('moving down');
 		}
 		// right
 		else if (this.upActive == false && this.leftActive == false && this.downActive == false && this.rightActive == true)
@@ -191,11 +204,11 @@ class Character {
 				image(this.charImage,this.x-this.length/2,this.y-this.height/2);
 			}
 		}
-		else if (this.alive == 0 && this.deathAnimation.isAnimationFinished() != -1)
+		else if (this.alive == 0 && this.deathAnimation != null && this.deathAnimation.isAnimationFinished() != -1)
 		{
 			this.deathAnimation.drawAnimation();
 		}
-		else if (this.alive == 0 && this.deathAnimation.isAnimationFinished() == -1)
+		else if (this.alive == 0 && this.deathAnimation != null && this.deathAnimation.isAnimationFinished() == -1)
 		{
 			this.alive = -1;
 		}
@@ -204,8 +217,11 @@ class Character {
 	killCharacter()
 	{
 		this.alive = 0;
-		this.deathAnimation.setXY(this.x-15,this.y-15);
-		this.deathAnimation.startAnimation();
+		if (this.deathAnimation != null)
+		{
+			this.deathAnimation.setXY(this.x-this.length,this.y-this.height);
+			this.deathAnimation.startAnimation();
+		}
 	}
 
 	birthCharacter()

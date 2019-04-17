@@ -51,6 +51,7 @@ class ProjectileManager {
 					    c1.collided(this.projectileList[x].getX(),this.projectileList[x].getY(),this.projectileList[x].getRadius(),
 							enemy.getX(),enemy.getY(),enemy.getRadius()) == true)
 					{
+						this.projectileList[x].destroyProjectile();
 						console.log('explode!');
 						return true;
 					}

@@ -59,6 +59,7 @@ class Animation {
 				this.frameCounter++;
 				if (this.frameCounter > this.animationSpeed)
 				{
+console.log(this.animateCounter);
 					this.frameCounter = 0;
 					this.animateCounter++;
 					if (this.animateCounter >= this.maxFrameCount)
