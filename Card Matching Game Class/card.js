@@ -52,8 +52,10 @@ class Card {
 		}
 		else if (this.flipped == 2) {
 			this.flipped = -2;
-			console.log('animation going');
-			this.flipAnimation.startAnimation();
+			if (this.flipAnimation != null)
+			{
+				this.flipAnimation.startAnimation();
+			}
 
 		}
 	}
@@ -94,9 +96,16 @@ class Card {
 		}
 		else if (this.flipped == -2)
 		{
-			if (this.flipAnimation.isAnimationFinished() == 1)
+			if (this.flipAnimation != null)
 			{
-				this.flipAnimation.drawAnimation();
+				if (this.flipAnimation.isAnimationFinished() == 1)
+				{
+					this.flipAnimation.drawAnimation();
+				}
+				else {
+					this.flipped = 1;
+//					console.log('set card back');
+				}
 			}
 			else {
 				this.flipped = 1;

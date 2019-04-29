@@ -127,7 +127,7 @@ class CardDeck {
 							this.flippedSound.play();
 						}
 						this.cardData[h][v].flipCard();
-						console.log('flip card');
+//						console.log('flip card');
 					}
 					else if (this.cardData[h][v].show() == 3)
 					{
@@ -174,12 +174,16 @@ class CardDeck {
 			for (var x = 0; x < i-1; x++)
 			{
 				if (!this.matchCardArray[x].match(this.matchCardArray[x+1]))
-						match = false;
+				{
+					match = false;
+//console.log('mismatch');
+				}
 			}
 			if (match == true)
 			{
 				if (order == "remove")
 				{
+//					console.log('removing card');
 					for (var x = 0; x < this.maxCardMatch; x++)
 					{
 						this.matchCardArray[x].removeCard();

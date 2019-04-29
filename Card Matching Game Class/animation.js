@@ -42,6 +42,7 @@ class Animation {
 	startAnimation()
 	{
 		this.animationFinished = 1;
+		this.doOnce = 0;
 	}
 
 	isAnimationFinished()
