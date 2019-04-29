@@ -6,6 +6,8 @@ var c4;
 var delayTimer;
 var deck;
 
+var flipAnimation;
+
 function preload()
 {
 }
@@ -14,6 +16,17 @@ function preload()
 function setup()
 {
 	createCanvas(1000,600);
+
+	var flipAnimation = new Array(5);
+	flipAnimation[0] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-1.png');
+	flipAnimation[1] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-2.png');
+	flipAnimation[2] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-3.png');
+	flipAnimation[3] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-4.png');
+	flipAnimation[4] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-5.png');
+	flipAnimation[5] = loadImage('https://bleungwpg.github.io/resourcehosting/Explosion-6.png');
+
+
+
 	var flippedCard = loadImage('https://bleungwpg.github.io/resourcehosting/cardGame/hiddenCard.png');
 	var card1 = loadImage('https://bleungwpg.github.io/resourcehosting/cardGame/moon1.png');
 	var card2 = loadImage('https://bleungwpg.github.io/resourcehosting/cardGame/orange1.png');
@@ -21,10 +34,14 @@ function setup()
 	var card4 = loadImage('https://bleungwpg.github.io/resourcehosting/cardGame/rocket1.png');
 
 	deck = new CardDeck(100,140,2,2,flippedCard);
+	deck.setFlipAnimation(flipAnimation);
 	deck.addCard(card1,0);
 	deck.addCard(card1,0);
 	deck.addCard(card2,1);
 	deck.addCard(card2,1);
+	deck.addCard(card3,2);
+	deck.addCard(card3,2);
+
 
 	// delay timer
 	delayTimer = new Timer(0,0,0,0);

@@ -1,11 +1,12 @@
 class Card {
-	constructor(img,id,x,y,r,c,l,h,flippedImg)
+	constructor(img,id,x,y,r,c,l,h,flippedImg,flipAnimation)
 	{
 		this.flippedImg = flippedImg;
 		this.img = img;
 		// flipped = 0; not turned gameOver
-		// flipped = 1; turned over
-		this.flipped = 0;
+		// flipped = 1; card is shown
+		// flipped = 2; card is covered
+		this.flipped = 2;
 
 		// the identifier for the card
 		this.id = id;
@@ -23,6 +24,14 @@ class Card {
 
 		this.cardButton = new Button(this.x,this.y,this.l,this.h);
 		this.cardButton.setHidden(true);
+
+		this.flipAnimation = null;
+
+		if (flipAnimation != null)
+		{
+			this.flipAnimation = new Animation(x,y,l,h,flipAnimation.length,flipAnimation);
+		}
+
 	}
 
 	getCardState()
@@ -30,20 +39,28 @@ class Card {
 		return this.flipped;
 	}
 
+	// flipState - 1; card is shown
+	// flipState - 2; card is removed
+	// flipState - 0; card is removed
+	// flipState - 3; card is animated
 	flipCard()
 	{
 		if (this.flipped == 1)
 		{
-			this.flipped = 0;
+			// change this later
+			this.flipped = 2;
 		}
-		else if (this.flipped == 0) {
-			this.flipped = 1;
+		else if (this.flipped == 2) {
+			this.flipped = -2;
+			console.log('animation going');
+			this.flipAnimation.startAnimation();
+
 		}
 	}
 
 	removeCard()
 	{
-		this.flipped = 2;
+		this.flipped = 0;
 	}
 
 	match(anotherCard)
@@ -64,15 +81,28 @@ class Card {
 
 	show()
 	{
+		// flipped = 0; not turned gameOver
+		// flipped = 1; card is shown
+		// flipped = 2; card is covered
 		if (this.flipped == 1)
 		{
 			image(this.img,this.x,this.y,this.l,this.h);
 		}
-		else if (this.flipped == 0)
+		else if (this.flipped == 2)
 		{
 			image(this.flippedImg,this.x,this.y,this.l,this.h);
 		}
-		else if (this.flipped == 2)
+		else if (this.flipped == -2)
+		{
+			if (this.flipAnimation.isAnimationFinished() == 1)
+			{
+				this.flipAnimation.drawAnimation();
+			}
+			else {
+				this.flipped = 1;
+			}
+		}
+		else if (this.flipped == 0)
 		{
 			return 2;
 		}

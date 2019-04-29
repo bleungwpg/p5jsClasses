@@ -35,6 +35,9 @@ class CardDeck {
 				this.cardData[hor][ver] = null;
 			}
 		}
+
+		// flip animation
+		this.flipAnimation = null;
 	}
 
 /*
@@ -57,7 +60,13 @@ class CardDeck {
 			var newC = 0;
 		}
 		else {
-			this.cardData[this.currentC][this.currentR] = new Card(img,id,this.currentC*this.l,this.currentR*this.h,this.currentR,this.currentC,this.l,this.h,this.flippedImg);;
+			if (this.flipAnimation == null)
+			{
+				this.cardData[this.currentC][this.currentR] = new Card(img,id,this.currentC*this.l,this.currentR*this.h,this.currentR,this.currentC,this.l,this.h,this.flippedImg,null);
+			}
+			else {
+				this.cardData[this.currentC][this.currentR] = new Card(img,id,this.currentC*this.l,this.currentR*this.h,this.currentR,this.currentC,this.l,this.h,this.flippedImg,this.flipAnimation);
+			}
 			this.currentC++;
 			if (this.currentC >= this.maxCol)
 			{
@@ -76,6 +85,16 @@ class CardDeck {
 	{
 		this.startX = x;
 		this.startY = y;
+	}
+
+	setFlipAnimation(animation)
+	{
+		this.flipAnimation = new Array(animation.length)
+
+		for (var x = 0; x < animation.length; x++)
+		{
+			this.flipAnimation[x] = animation[x];
+		}
 	}
 
 	setMaxH(maxH)
@@ -109,6 +128,10 @@ class CardDeck {
 						}
 						this.cardData[h][v].flipCard();
 						console.log('flip card');
+					}
+					else if (this.cardData[h][v].show() == 3)
+					{
+
 					}
 					else if (this.cardData[h][v].show() == 2)
 					{
