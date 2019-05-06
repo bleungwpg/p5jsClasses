@@ -2,10 +2,8 @@ var c1;
 var c2;
 var c3;
 var c4;
-
 var delayTimer;
 var deck;
-
 var flipAnimation;
 
 function preload()
@@ -33,14 +31,17 @@ function setup()
 	var card3 = loadImage('https://bleungwpg.github.io/resourcehosting/cardGame/queen1.png');
 	var card4 = loadImage('https://bleungwpg.github.io/resourcehosting/cardGame/rocket1.png');
 
-	deck = new CardDeck(100,140,2,2,flippedCard);
+	deck = new CardDeck(100,140,2,4,flippedCard,true); // length,height,maxrow,maxcol,flippedCard,random
 	deck.setFlipAnimation(flipAnimation);
+
 	deck.addCard(card1,0);
 	deck.addCard(card1,0);
 	deck.addCard(card2,1);
 	deck.addCard(card2,1);
 	deck.addCard(card3,2);
 	deck.addCard(card3,2);
+	deck.addCard(card4,3);
+	deck.addCard(card4,3);
 
 
 	// delay timer
