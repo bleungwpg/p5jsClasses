@@ -125,6 +125,8 @@ function draw()
 			// if answer has reach the base
 			console.log('answer has reached base, add score');
 			score.addScore(10);
+			enemySet1.endQuestion();
+			enemySet2.startEnemies();
 
 		}
 		if (enemySet1.isAnswerAlive() == false)
