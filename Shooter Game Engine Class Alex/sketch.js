@@ -92,28 +92,27 @@ function draw()
 
 
 		var gameState = enemySet1.drawEnemies(pm1);
-//console.log(gameState);
 		if (gameState == -1)
 		{
 			// if enemies have reach the base
 			console.log('enemies have reached base, subtract health');
-			healthBar.deductHealth(1);
-//			enemySet2.startEnemies();
 			enemySet1.endQuestion();
 			enemySet2.startEnemies();
-
+			score.addScore(10);
 		}
 		else if (gameState == 1)
 		{
 			// if answer has reach the base
 			console.log('answer has reached base, add score');
-			score.addScore(10);
-
+			enemySet1.endQuestion();
+			enemySet2.startEnemies();
+			healthBar.deductHealth(1);
 		}
 		if (enemySet1.isAnswerAlive() == false)
 		{
 			// if answer has been shot
 			console.log('answer has been shot!');
+
 		}
 	}
 	// END QUESTION 1 ----------------------------------------------------------
@@ -131,20 +130,22 @@ function draw()
 		{
 			// if enemies have reach the base
 			console.log('enemies have reached base, subtract health');
-			healthBar.deductHealth(1);
+			enemySet2.endQuestion();
 			enemySet3.startEnemies();
+			score.addScore(10);
 		}
 		else if (gameState == 1)
 		{
 			// if answer has reach the base
 			console.log('answer has reached base, add score');
+			enemySet2.endQuestion();
 			enemySet3.startEnemies();
+			healthBar.deductHealth(1);
 		}
 		if (enemySet2.isAnswerAlive() == false)
 		{
 			// if answer has been shot
 			console.log('answer has been shot!');
-			enemySet3.startEnemies();
 		}
 	}
 	// END QUESTION 2 ----------------------------------------------------------
@@ -154,7 +155,20 @@ function draw()
 
 	if (enemySet3.isQuestionFinished() == false)
 	{
-		enemySet3.drawEnemies(pm1);
+		var gameState = enemySet3.drawEnemies(pm1);
+		if (gameState == -1)
+		{
+			// if enemies have reach the base
+			console.log('enemies have reached base, subtract health');
+			window.open("mainmenu/mainmenu.html","_self");
+		}
+		else if (gameState == 1)
+		{
+			// if answer has reach the base
+			console.log('answer has reached base, add score');
+			window.open("mainmenu/mainmenu.html","_self");
+		}
+
 		if (enemySet3.isAnswerAlive() == false)
 		{
 			// add things like sound effects / increase or decrease score
