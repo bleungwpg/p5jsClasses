@@ -21,6 +21,14 @@ class Button {
 		this.textHeight = 16;
 		this.clicked = 0;
 		this.buttonState = 0;
+		this.img = null;
+	}
+
+	setImage(img)
+	{
+//		image(img,100,400);
+
+		this.img = img;
 	}
 
 	getButtonState()
@@ -95,42 +103,73 @@ class Button {
 		if (mouseX > this.x && mouseX < this.x + this.length &&
 			  mouseY > this.y && mouseY < this.y + this.height)
 		{
-			fill(this.fillOverR,this.fillOverG,this.fillOverB);
-			rect(this.x,this.y,this.length,this.height);
-
-
-			if (mouseIsPressed && this.clicked == 0)
+			if (this.img == null)
 			{
-				this.clicked++;
-				fill(this.textR,this.textG,this.textB);
-				text(this.textPressed,(this.x + this.textLength),(this.y+this.textHeight));
+				fill(this.fillOverR,this.fillOverG,this.fillOverB);
+				rect(this.x,this.y,this.length,this.height);
 
-				this.buttonState = 1;
-			}
-			else if (mouseIsPressed && this.clicked > 0)
-			{
-				this.clicked=2;
-				fill(this.textR,this.textG,this.textB);
-				text(this.textPressed,(this.x + this.textLength),(this.y+this.textHeight));
 
-				this.buttonState = 2;
-			}
-			else if (!mouseIsPressed && this.clicked > 0) {
-				this.clicked = 0;
+				if (mouseIsPressed && this.clicked == 0)
+				{
+					this.clicked++;
+					fill(this.textR,this.textG,this.textB);
+					text(this.textPressed,(this.x + this.textLength),(this.y+this.textHeight));
+
+					this.buttonState = 1;
+				}
+				else if (mouseIsPressed && this.clicked > 0)
+				{
+					this.clicked=2;
+					fill(this.textR,this.textG,this.textB);
+					text(this.textPressed,(this.x + this.textLength),(this.y+this.textHeight));
+
+					this.buttonState = 2;
+				}
+				else if (!mouseIsPressed && this.clicked > 0) {
+					this.clicked = 0;
+				}
+				else {
+					fill(this.textR,this.textG,this.textB);
+					text(this.textOver,(this.x + this.textLength),(this.y+this.textHeight));
+					this.buttonState = 0;
+					this.clicked = 0;
+				}
 			}
 			else {
-				fill(this.textR,this.textG,this.textB);
-				text(this.textOver,(this.x + this.textLength),(this.y+this.textHeight));
-				this.buttonState = 0;
-				this.clicked = 0;
+				image(this.img,this.x,this.y);
+
+				if (mouseIsPressed && this.clicked == 0)
+				{
+					this.clicked++;
+					this.buttonState = 1;
+				}
+				else if (mouseIsPressed && this.clicked > 0)
+				{
+					this.clicked=2;
+					this.buttonState = 2;
+				}
+				else if (!mouseIsPressed && this.clicked > 0) {
+					this.clicked = 0;
+				}
+				else {
+					this.buttonState = 0;
+					this.clicked = 0;
+				}
+//				console.log(this.buttonState);
 			}
 		}
 		else {
-			fill(this.fillR,this.fillG,this.fillB);
-			rect(this.x,this.y,this.length,this.height);
+			if (this.img == null)
+			{
+				fill(this.fillR,this.fillG,this.fillB);
+				rect(this.x,this.y,this.length,this.height);
 
-			fill(this.textR,this.textG,this.textB);
-			text(this.text,this.x+this.textLength,this.y+this.textHeight);
+				fill(this.textR,this.textG,this.textB);
+				text(this.text,this.x+this.textLength,this.y+this.textHeight);
+			}
+			else {
+				image(this.img,this.x,this.y);
+			}
 		}
 	}
 
