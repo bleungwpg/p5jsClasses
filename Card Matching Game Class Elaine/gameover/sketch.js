@@ -5,6 +5,7 @@ function setup()
 	createCanvas(500,500);
 	b1 = new Button(10,10,100,25);
 	b1.setText("Go Back to Main menu");
+	b1.setTextOver("Go Back to Main menu");
 	b1.setButtonLH(203,43);
 	b1.setButtonOverFill(50,255,50);
 }
