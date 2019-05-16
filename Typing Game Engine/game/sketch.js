@@ -25,18 +25,26 @@ function setup()
 
 
 	// setup maximum number of questions
-	allQuestions = new QuestionManager(2);
+	allQuestions = new QuestionManager();
 	// set maximum value they can use to answer the question; e.g. only 1 character max
 	allQuestions.setMaxAnswer(1);
 
 	// --------------------------------- Setup Question and Answer ---------------------------------
 	// question 1
-	var questionImage1 = loadImage('https://bleungwpg.github.io/resourcehosting/q1Question.png');
-	allQuestions.addQuestion(0,100,200,25,questionImage1,5);
+	var questionImage1 = loadImage('https://bleungwpg.github.io/resourcehosting/mathgame/mathQ1.png');
+	allQuestions.addQuestion(0,100,200,35,questionImage1,2);
 
 	// question 2
-	var questionImage2 = loadImage('https://bleungwpg.github.io/resourcehosting/q2Question.png');
-	allQuestions.addQuestion(0,100,200,25,questionImage2,1);
+	var questionImage2 = loadImage('https://bleungwpg.github.io/resourcehosting/mathgame/mathQ2.png');
+	allQuestions.addQuestion(0,100,200,35,questionImage2,4);
+
+	// question 3
+	var questionImage3 = loadImage('https://bleungwpg.github.io/resourcehosting/mathgame/mathQ3.png');
+	allQuestions.addQuestion(0,100,200,35,questionImage3,6);
+
+
+	// set typingbox length and height
+	allQuestions.setTypingBoxLH(100,25);
 	// --------------------------------- Setup Question and Answer ---------------------------------
 
 	exitButton = new Button(50,300,100,50);
@@ -48,7 +56,7 @@ function setup()
 	allQuestions.setTickImage(tickImg,25,25);
 	var crossImg = loadImage('https://bleungwpg.github.io/resourcehosting/cross.png');
 	allQuestions.setCrossImage(crossImg,25,25);
-	allQuestions.setMarkXY(140,0);
+	allQuestions.setMarkXY(110,7);
 	// ---------------------- set images and coordinates of tick and cross ----------------------
 }
 
@@ -87,16 +95,16 @@ function draw()
 			timer.resetTimer();
 			health.deductHealth(100);
 
-			// if your health is too low go to another screen; e.g. game over
+			// if your health is too low end the game and show results
 			if (health.getCurrentHealth() <= 0)
 			{
-				window.open("../mainmenu/mainmenu.html","_self");
+				allQuestions.endGame();
 			}
 		}
 		health.showHealthBar();
 	}
 	else {
-		// all questions answered
+		// all questions answered; show results
 		allQuestions.showResults();
 		exitButton.showButton();
 

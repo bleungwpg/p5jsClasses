@@ -11,6 +11,8 @@ class TypingQuestion {
 		this.typingBox = createInput('');
 		this.typingBox.position(this.x+this.l+10,this.y);
 		this.typingBox.hide();
+		this.typingBoxLength = 100;
+		this.typingBoxHeight = 25;
 
 		this.maxAnswer = null;
 
@@ -38,6 +40,12 @@ class TypingQuestion {
 		this.markh = h;
 	}
 
+	setTypingBoxLH(l,h)
+	{
+		this.typingBoxLength = l;
+		this.typingBoxHeight = h;
+	}
+
 	setMarkXY(x,y)
 	{
 		this.markX = x;
@@ -59,6 +67,7 @@ class TypingQuestion {
 		image(this.question,this.x,this.y,this.l,this.h);
 		// setup textbox
 		this.typingBox.position(this.x+this.l+10,this.heightConstant+this.y);
+		this.typingBox.size(this.typingBoxLength,this.typingBoxHeight);
 		this.typingBox.show();
 		this.typingBox.elt.focus;
 
@@ -113,6 +122,7 @@ class TypingQuestion {
 
 		// show answer
 		this.typingBox.position(x+this.l+10,this.heightConstant+y);
+		this.typingBox.size(this.typingBoxLength,this.typingBoxHeight);
 		this.typingBox.show();
 
 		// show mark

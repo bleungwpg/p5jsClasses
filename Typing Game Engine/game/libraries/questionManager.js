@@ -1,14 +1,21 @@
 class QuestionManager {
-	constructor(maxQ)
+	constructor()
 	{
-		this.maxQ = maxQ;
-		this.questionCounter = 0;
+		this.maxQ = 0;
 		this.currentQ = 0;
 
 		this.questions = new Array(this.maxQ);
 
 		this.maxAnswer = null;
 
+	}
+
+	setTypingBoxLH(l,h)
+	{
+		for (var i = 0; i < this.maxQ; i++)
+		{
+			this.questions[i].setTypingBoxLH(l,h);
+		}
 	}
 
 	setTickImage(img,l,h)
@@ -51,21 +58,14 @@ class QuestionManager {
 
 	addQuestion(x,y,l,h,question,answer)
 	{
-		this.questions[this.questionCounter] = new TypingQuestion(x,y,l,h,question,answer);
+		this.questions[this.maxQ] = new TypingQuestion(x,y,l,h,question,answer);
 		if (this.maxAnswer != null)
 		{
-			this.questions[this.questionCounter].setMaxAnswer(this.maxAnswer);
+			this.questions[this.maxQ].setMaxAnswer(this.maxAnswer);
 		}
 
 
-		this.questionCounter++;
-		if (this.questionCounter >= this.maxQ)
-		{
-			this.questionCounter = this.maxQ;
-		}
-
-
-
+		this.maxQ++;
 	}
 
 	getCurrentQuestion()
